@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor Al-Islam | Simple & Clear Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #064e3b;
+            --accent: #d97706;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        .search-container {
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+        }
+        .result-box {
+            background-color: #f8fafc;
+            border-radius: 32px;
+            border: 1px solid #f1f5f9;
+        }
+        /* Custom styles to prevent AI markers from showing */
+        .plain-text h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #064e3b;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .plain-text p {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+                <div class="w-10 h-10 bg-emerald-900 rounded-xl flex items-center justify-center text-white font-bold">N</div>
+                <span class="text-xl font-bold tracking-tight text-emerald-950">Noor Al-Islam</span>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-8">
+                <button onclick="showSection('home')" class="nav-link">Home</button>
+                <button onclick="showSection('quran')" class="nav-link">Quran</button>
+                <button onclick="showSection('hadith')" class="nav-link">Hadith</button>
+                <button onclick="showSection('history')" class="nav-link">History</button>
+                <button onclick="showSection('duas')" class="nav-link">Duas</button>
+            </nav>
+
+            <button onclick="showSection('quran')" class="bg-emerald-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-emerald-800 transition shadow-lg shadow-emerald-900/10">
+                Read Quran
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content" class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- HOME -->
+        <section id="section-home" class="space-y-16">
+            <div class="text-center py-10">
+                <h1 class="text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Learn Islam Simply.</h1>
+                <p class="text-lg text-slate-500 max-w-xl mx-auto">Get easy answers to your questions and explore the beautiful teachings of the Quran and Sunnah.</p>
+            </div>
+
+            <!-- Search -->
+            <div class="max-w-2xl mx-auto space-y-4">
+                <div class="relative search-container rounded-3xl overflow-hidden border border-slate-200 bg-white p-2 flex items-center">
+                    <input id="search-input" type="text" placeholder="What would you like to know?" class="flex-1 px-6 py-4 outline-none text-lg">
+                    <button onclick="askSimpleAI()" class="bg-emerald-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 transition">Search</button>
+                </div>
+                <p id="status-msg" class="hidden text-center text-sm text-emerald-700 font-medium">Writing a clear answer for you...</p>
+            </div>
+
+            <!-- Response Area -->
+            <div id="response-container" class="hidden animate-in fade-in duration-500">
+                <div class="result-box p-8 md:p-12">
+                    <div id="response-text" class="plain-text text-lg text-slate-700 leading-relaxed">
+                        <!-- Clean response injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div onclick="showSection('quran')" class="p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition cursor-pointer text-center group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition">📖</div>
+                    <h3 class="font-bold text-slate-900">Quran</h3>
+                </div>
+                <div onclick="showSection('hadith')" class="p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition cursor-pointer text-center group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition">📜</div>
+                    <h3 class="font-bold text-slate-900">Hadith</h3>
+                </div>
+                <div onclick="showSection('history')" class="p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition cursor-pointer text-center group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition">🕌</div>
+                    <h3 class="font-bold text-slate-900">History</h3>
+                </div>
+                <div onclick="showSection('duas')" class="p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition cursor-pointer text-center group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition">🤲</div>
+                    <h3 class="font-bold text-slate-900">Duas</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- QURAN -->
+        <section id="section-quran" class="hidden space-y-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <h2 class="text-3xl font-bold">Quran Library</h2>
+                <div class="flex gap-2 bg-slate-100 p-2 rounded-2xl">
+                    <input id="surah" type="number" placeholder="Surah" class="w-20 bg-transparent text-center font-bold outline-none">
+                    <input id="ayah" type="number" placeholder="Ayah" class="w-20 bg-transparent text-center font-bold outline-none border-l border-slate-200">
+                    <button onclick="loadVerse()" class="bg-emerald-900 text-white px-6 py-2 rounded-xl text-sm font-bold">Open</button>
+                </div>
+            </div>
+            <div id="quran-output" class="min-h-[300px] flex items-center justify-center text-slate-400">
+                Please enter a Surah and Ayah number to begin.
+            </div>
+        </section>
+
+        <!-- SECTIONS: HADITH, HISTORY, DUAS (Simplified Placeholders) -->
+        <section id="section-hadith" class="hidden space-y-8">
+            <h2 class="text-3xl font-bold">Beautiful Hadith</h2>
+            <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100">
+                <p class="text-xl text-slate-800 italic mb-4">"The best of you are those who are best to their families."</p>
+                <p class="text-xs font-bold text-emerald-800">SUNAN AL-TIRMIDHI</p>
+            </div>
+        </section>
+
+        <section id="section-history" class="hidden space-y-8">
+            <h2 class="text-3xl font-bold">Islamic History</h2>
+            <div class="space-y-6">
+                <div class="p-6 border-l-4 border-emerald-900 bg-slate-50 rounded-r-3xl">
+                    <h4 class="font-bold text-lg mb-2">The Mission Begins</h4>
+                    <p class="text-slate-600">The Prophet (PBUH) received his first revelation in 610 CE, teaching the world about the oneness of God.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-duas" class="hidden space-y-8">
+            <h2 class="text-3xl font-bold">Simple Duas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-8 bg-emerald-900 text-white rounded-3xl">
+                    <h4 class="font-bold mb-4">For Knowledge</h4>
+                    <p class="arabic-font text-3xl mb-4">رَبِّ زِدْنِي عِلْمًا</p>
+                    <p class="text-emerald-100">"My Lord, increase me in knowledge."</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-12 border-t border-slate-100 text-center">
+        <p class="text-sm text-slate-400">Easy Islamic Knowledge for Everyone.</p>
+    </footer>
+
+    <script>
+        const apiKey = ""; 
+
+        function showSection(id) {
+            ['home', 'quran', 'hadith', 'history', 'duas'].forEach(s => {
+                document.getElementById(`section-${s}`).classList.add('hidden');
+            });
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
+
+        async function askSimpleAI() {
+            const input = document.getElementById('search-input');
+            const box = document.getElementById('response-container');
+            const target = document.getElementById('response-text');
+            const status = document.getElementById('status-msg');
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            status.classList.remove('hidden');
+            box.classList.add('hidden');
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: query }] }],
+                        systemInstruction: { parts: [{ text: "You are a helpful teacher. Explain things about Islam in very EASY English that even a 10-year-old can understand. Be SHORT and DIRECT. Do NOT use any symbols like # or * or _. Just use plain sentences and simple paragraphs. No lists with dashes. Just clear, natural writing." }] }
+                    })
+                });
+
+                const data = await response.json();
+                let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I don't know the answer to that.";
+
+                // STRICT CLEANING: Remove any AI markers that might have leaked
+                text = text.replace(/[#*`_]/g, '');
+
+                const finalHtml = text.split('\n\n').map(p => `<p>${p}</p>`).join('');
+                target.innerHTML = finalHtml;
+                status.classList.add('hidden');
+                box.classList.remove('hidden');
+                box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) {
+                status.innerText = "Error. Please try again.";
+            }
+        }
+
+        async function loadVerse() {
+            const s = document.getElementById('surah').value || 1;
+            const a = document.getElementById('ayah').value || 1;
+            const target = document.getElementById('quran-output');
+
+            target.innerHTML = `<div class="animate-spin h-6 w-6 border-2 border-emerald-900 border-t-transparent rounded-full"></div>`;
+
+            try {
+                const r1 = await fetch(`https://api.alquran.cloud/v1/ayah/${s}:${a}`);
+                const r2 = await fetch(`https://api.alquran.cloud/v1/ayah/${s}:${a}/en.asad`);
+                const d1 = await r1.json();
+                const d2 = await r2.json();
+
+                const r3 = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `In 2 very simple sentences, what is the lesson of Surah ${s} Ayah ${a}? NO symbols at all.` }] }]
+                    })
+                });
+                const d3 = await r3.json();
+                let lesson = d3.candidates?.[0]?.content?.parts?.[0]?.text.replace(/[#*`_]/g, '') || "";
+
+                target.innerHTML = `
+                    <div class="w-full text-center space-y-10 animate-in fade-in duration-700">
+                        <div class="arabic-font text-5xl text-emerald-950">${d1.data.text}</div>
+                        <div class="max-w-2xl mx-auto space-y-6">
+                            <p class="text-xl font-medium text-slate-700 italic">"${d2.data.text}"</p>
+                            <div class="bg-slate-50 p-8 rounded-[40px] text-left">
+                                <h4 class="font-bold text-emerald-900 mb-2">The Lesson</h4>
+                                <p class="text-slate-600">${lesson}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                target.innerHTML = "Not found. Check numbers.";
+            }
+        }
+    </script>
+</body>
+</html>
+
+  
